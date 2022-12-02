@@ -13,10 +13,10 @@ def shape_score(shape):
 
 
 def game_score(theirShape, myShape):
-    if shape_to_win(theirShape) == myShape:
+    if myShape == shape_to_win(theirShape):
         return 6
 
-    if theirShape == myShape:
+    if myShape == theirShape:
         return 3
 
     return 0
