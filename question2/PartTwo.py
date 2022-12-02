@@ -1,34 +1,23 @@
-LOSS = "Loss"
-DRAW = "Draw"
-WIN = "Win"
-SCISSORS = "Scissors"
-PAPER = "Paper"
-ROCK = "Rock"
+from PaperScissorsStone import PAPER
+from PaperScissorsStone import ROCK
+from PaperScissorsStone import shape_to_lose
+from PaperScissorsStone import shape_to_win
 
+LOSS = "X"
+DRAW = "Y"
+WIN = "Z"
 
-def shape(code):
-    return ROCK if code == "A" else (PAPER if code == "B" else SCISSORS)
-
-
-def outcome(code):
-    return WIN if code == "Z" else (DRAW if code == "Y" else LOSS)
-
-
-def game_score(code):
-    game_outcome = outcome(code)
+def game_score(game_outcome):
     return 6 if game_outcome == WIN else (3 if game_outcome == DRAW else 0)
 
 
-def shape_to_play_score(their_shape_code, result_code):
-    game_outcome = outcome(result_code)
-    their_shape = shape(their_shape_code)
-
-    shape_to_play = their_shape
-    if game_outcome == WIN:
-        shape_to_play = ROCK if their_shape == SCISSORS else (PAPER if their_shape == ROCK else SCISSORS)
-
-    if game_outcome == "Loss":
-        shape_to_play = ROCK if their_shape == PAPER else (PAPER if their_shape == SCISSORS else SCISSORS)
+def shape_to_play_score(their_shape, result):
+    if result == WIN:
+        shape_to_play = shape_to_win(their_shape)
+    elif result == LOSS:
+        shape_to_play = shape_to_lose(their_shape)
+    else:
+        shape_to_play = their_shape
 
     return 1 if shape_to_play == ROCK else (2 if shape_to_play == PAPER else 3)
 

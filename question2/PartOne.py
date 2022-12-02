@@ -1,15 +1,19 @@
+from PaperScissorsStone import shape_to_win
+from PaperScissorsStone import ROCK
+from PaperScissorsStone import PAPER
+from PaperScissorsStone import SCISSORS
+
+
 def shape(code):
-    return "Rock" if code in ("A", "X") else ("Paper" if code in ("B", "Y") else "Scissors")
+    return ROCK if code in ("A", "X") else (PAPER if code in ("B", "Y") else SCISSORS)
 
 
-def shapeScore(shape):
-    return 1 if shape == 'Rock' else (2 if shape == 'Paper' else 3)
+def shape_score(shape):
+    return 1 if shape == ROCK else (2 if shape == PAPER else 3)
 
 
-def winLoseScore(theirShape, myShape):
-    if ((theirShape == 'Rock' and myShape == "Paper") or
-            (theirShape == 'Paper' and myShape == 'Scissors') or
-            (theirShape == 'Scissors' and myShape == 'Rock')):
+def game_score(theirShape, myShape):
+    if shape_to_win(theirShape) == myShape:
         return 6
 
     if theirShape == myShape:
@@ -22,6 +26,6 @@ with open('question_data.txt') as f:
     score = 0
     for line in f:
         theirShape, myShape = [shape(s.strip()) for s in line.split(' ')]
-        score += shapeScore(myShape) + winLoseScore(theirShape, myShape)
+        score += shape_score(myShape) + game_score(theirShape, myShape)
 
     print(score)
