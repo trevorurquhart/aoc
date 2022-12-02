@@ -19,12 +19,7 @@ def game_score(code):
     return 6 if game_outcome == WIN else (3 if game_outcome == DRAW else 0)
 
 
-def shape_score(shape):
-    return 1 if shape == ROCK else (2 if shape == PAPER else 3)
-
-
 def shape_to_play_score(their_shape_code, result_code):
-
     game_outcome = outcome(result_code)
     their_shape = shape(their_shape_code)
 
@@ -35,7 +30,7 @@ def shape_to_play_score(their_shape_code, result_code):
     if game_outcome == "Loss":
         shape_to_play = ROCK if their_shape == PAPER else (PAPER if their_shape == SCISSORS else SCISSORS)
 
-    return shape_score(shape_to_play)
+    return 1 if shape_to_play == ROCK else (2 if shape_to_play == PAPER else 3)
 
 
 with open('question_data.txt') as f:
