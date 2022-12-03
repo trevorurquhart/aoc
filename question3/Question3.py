@@ -19,15 +19,15 @@ def solve_one(lines):
 
 
 def solve_two(lines):
-    badges = []
+    total = 0
     group = []
     for line in lines:
         group.append(line)
-        if (len(group) == 3):
-            badges.append(find_badge(group).pop())
+        if len(group) == 3:
+            total += priority(find_badge(group).pop())
             group.clear()
 
-    print(sum(map(priority, badges)))
+    print(total)
 
 
 with open('question_data.txt') as f:
