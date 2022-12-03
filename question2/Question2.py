@@ -59,8 +59,8 @@ def solve_one(lines):
 def solve_two(lines):
     score = 0
     for line in lines:
-        their_shape_code, result_code = line.split(' ')
-        score += shape_score(shape_to_play(their_shape_code, result_code)) + game_score(result_code)
+        their_shape, result = line.split(' ')
+        score += shape_score(shape_to_play(their_shape, result)) + game_score(result)
     print(score)
 
 
