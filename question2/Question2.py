@@ -17,7 +17,7 @@ class Outcome:
 
 
 shape_to_win = {TheirMove.ROCK: MyMove.PAPER, TheirMove.PAPER: MyMove.SCISSORS, TheirMove.SCISSORS: MyMove.ROCK}
-to_lose = {TheirMove.ROCK: MyMove.SCISSORS, TheirMove.PAPER: MyMove.ROCK, TheirMove.SCISSORS: MyMove.PAPER}
+shape_to_lose = {TheirMove.ROCK: MyMove.SCISSORS, TheirMove.PAPER: MyMove.ROCK, TheirMove.SCISSORS: MyMove.PAPER}
 shape_to_draw = {TheirMove.ROCK: MyMove.ROCK, TheirMove.PAPER: MyMove.PAPER, TheirMove.SCISSORS: MyMove.SCISSORS}
 
 
@@ -40,12 +40,13 @@ def game_result(their_shape, my_shape):
 
 
 def shape_to_play(their_shape, result):
-    if result == Outcome.WIN:
-        return shape_to_win[their_shape]
-    elif result == Outcome.LOSS:
-        return to_lose[their_shape]
-    else:
-        return shape_to_draw[their_shape]
+    match result:
+        case Outcome.WIN:
+            return shape_to_win[their_shape]
+        case Outcome.LOSS:
+            return shape_to_lose[their_shape]
+        case _:
+            return shape_to_draw[their_shape]
 
 
 def solve_one(lines):
