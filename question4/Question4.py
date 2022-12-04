@@ -7,8 +7,8 @@ def ranges_overlap(range_one, range_two):
 
 
 def as_range(elf_range):
-    lower, upper = elf_range.split("-")
-    return set(range(int(lower), int(upper) + 1))
+    lower, upper = map(int, elf_range.split("-"))
+    return set(range(lower, upper + 1))
 
 
 def solve(lines, fn):
