@@ -20,15 +20,7 @@ def solve(lines, fn):
     print(total)
 
 
-def solve_one(lines):
-    solve(lines, one_range_fully_contained)
-
-
-def solve_two(lines):
-    solve(lines, ranges_overlap)
-
-
 with open('question_data.txt') as f:
     lines = [line.strip() for line in f.readlines()]
-    solve_one(lines)
-    solve_two(lines)
+    solve(lines, one_range_fully_contained)
+    solve(lines, ranges_overlap)
