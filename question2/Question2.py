@@ -1,67 +1,56 @@
-class TheirMove:
-    ROCK = "A"
-    PAPER = "B"
-    SCISSORS = "C"
+def their_shape(code):
+    return "ABC".index(code) + 1
 
 
-class MyMove:
-    ROCK = "X"
-    PAPER = "Y"
-    SCISSORS = "Z"
-
-
-class Outcome:
-    LOSS = "X"
-    DRAW = "Y"
-    WIN = "Z"
-
-
-shape_to_win = {TheirMove.ROCK: MyMove.PAPER, TheirMove.PAPER: MyMove.SCISSORS, TheirMove.SCISSORS: MyMove.ROCK}
-shape_to_lose = {TheirMove.ROCK: MyMove.SCISSORS, TheirMove.PAPER: MyMove.ROCK, TheirMove.SCISSORS: MyMove.PAPER}
-shape_to_draw = {TheirMove.ROCK: MyMove.ROCK, TheirMove.PAPER: MyMove.PAPER, TheirMove.SCISSORS: MyMove.SCISSORS}
-
-
-def shape_score(shape):
-    return 1 if shape == MyMove.ROCK else (2 if shape == MyMove.PAPER else 3)
+def my_shape(code):
+    return "XYZ".index(code) + 1
 
 
 def game_score(game_outcome):
-    return 6 if game_outcome == Outcome.WIN else (3 if game_outcome == Outcome.DRAW else 0)
+    return 6 if game_outcome == "Z" else 3 if game_outcome == "Y" else 0
+
+
+def win(their_shape):
+    return 1 if their_shape == 3 else their_shape + 1
+
+
+def lose(their_shape):
+    return 3 if their_shape == 1 else their_shape - 1
 
 
 def game_result(their_shape, my_shape):
-    if my_shape == shape_to_win[their_shape]:
-        return Outcome.WIN
+    if my_shape == win(their_shape):
+        return 6
 
-    if my_shape == shape_to_draw[their_shape]:
-        return Outcome.DRAW
+    if my_shape == their_shape:
+        return 3
 
-    return Outcome.LOSS
+    return 0
 
 
-def shape_to_play(their_shape, result):
+def shape_score(their_shape, result):
     match result:
-        case Outcome.WIN:
-            return shape_to_win[their_shape]
-        case Outcome.LOSS:
-            return shape_to_lose[their_shape]
+        case "Z":
+            return win(their_shape)
+        case "X":
+            return lose(their_shape)
         case _:
-            return shape_to_draw[their_shape]
+            return their_shape
 
 
 def solve_one(lines):
     score = 0
     for line in lines:
-        their_shape, my_shape = [s for s in line.split(' ')]
-        score += shape_score(my_shape) + game_score(game_result(their_shape, my_shape))
+        them, me = line.split(' ')
+        score += my_shape(me) + game_result(their_shape(them), my_shape(me))
     print(score)
 
 
 def solve_two(lines):
     score = 0
     for line in lines:
-        their_shape, result = line.split(' ')
-        score += shape_score(shape_to_play(their_shape, result)) + game_score(result)
+        them, result = line.split(' ')
+        score += shape_score(their_shape(them), result) + game_score(result)
     print(score)
 
 
