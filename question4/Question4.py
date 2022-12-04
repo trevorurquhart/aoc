@@ -14,8 +14,8 @@ def as_range(elf_range):
 def solve(lines, fn):
     total = 0
     for line in lines:
-        range_one, range_two = line.split(",")
-        if fn(as_range(range_one), as_range(range_two)):
+        range_one, range_two = [as_range(r) for r in line.split(",")]
+        if fn(range_one, range_two):
             total += 1
     print(total)
 
