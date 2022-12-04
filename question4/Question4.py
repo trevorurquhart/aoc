@@ -1,5 +1,5 @@
 def one_range_fully_contained(range_one, range_two):
-    return (range_one - range_two) == set() or (range_two - range_one) == set()
+    return range_one.issubset(range_two) or range_two.issubset(range_one)
 
 
 def ranges_overlap(range_one, range_two):
