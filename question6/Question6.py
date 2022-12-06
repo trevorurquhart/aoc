@@ -2,9 +2,9 @@ question_data = "dfsfmfbbbjnbbpddfcfjcjbjwjqqbtbntnhtnncfnfpnffwpphwppvbvtvztzsz
 
 
 def find_marker(line, size):
-    for i in range(0, len(line) - (size - 1)):
-        if len(set(line[i:i + size])) == size:
-            return i + size
+    for i in range(size, len(line)):
+        if len(set(line[i - size:i])) == size:
+            return i
 
 
 print(find_marker(question_data, 4))
