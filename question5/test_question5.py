@@ -1,5 +1,4 @@
 import unittest
-import re
 
 from Question5 import find_move
 from Question5 import parse_crates
