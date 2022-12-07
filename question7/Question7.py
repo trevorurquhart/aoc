@@ -5,8 +5,7 @@ class Directory:
         self.files = []
         self.directories = []
         self.parent = parent
-        separator = "" if parent is None or parent.is_root() else "/"
-        self.full_path = name if parent is None else parent.full_path + separator + name
+        self.full_path = name if parent is None else parent.child_full_path(name)
 
     def cd(self, arg):
         match arg:
@@ -39,6 +38,9 @@ class Directory:
 
     def is_root(self):
         return self.parent is None
+
+    def child_full_path(self, name):
+        return "/" + name if self.is_root() else self.full_path + "/" + name
 
     def dir_sizes(self, ans=None, parents=None):
         if parents is None:
