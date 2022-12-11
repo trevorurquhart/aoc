@@ -11,8 +11,9 @@ class Monkey:
     def add_item(self, item):
         self.items.append(item)
 
-    def throw(self, item, monkeys, n):
-        monkeys[n].add_item(item)
+    def throw(self, item, monkeys):
+        target_monkey = self.if_true if item % self.test == 0 else self.if_false
+        monkeys[target_monkey].add_item(item)
 
     def do_op(self, n):
         return self.op(n)
@@ -21,7 +22,7 @@ class Monkey:
         while self.items:
             self.no_of_inspections += 1
             item = worry_fn(self.op(self.items.pop(0)))
-            self.throw(item, monkeys, self.if_true if item % self.test == 0 else self.if_false)
+            self.throw(item, monkeys)
 
 
 def parse_monkeys(lines):
