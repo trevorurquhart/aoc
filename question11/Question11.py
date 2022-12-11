@@ -1,3 +1,6 @@
+import math
+
+
 class Monkey:
 
     def __init__(self, items, op, test, if_true, if_false):
@@ -14,9 +17,6 @@ class Monkey:
     def throw(self, item, monkeys):
         target_monkey = self.if_true if item % self.test == 0 else self.if_false
         monkeys[target_monkey].add_item(item)
-
-    def do_op(self, n):
-        return self.op(n)
 
     def inspect(self, monkeys, worry_fn):
         while self.items:
@@ -63,11 +63,8 @@ def solve_one(lines):
 
 def solve_two(lines):
     monkeys = parse_monkeys(lines)
-    mod = 1
-    for t in ([m.test for m in monkeys]):
-        mod = mod * t
-
-    solve(monkeys, 10000, lambda x: x % mod)
+    lcm = math.lcm(*[m.test for m in monkeys])
+    solve(monkeys, 10000, lambda x: x % lcm)
 
 
 with open('question_data.txt') as q:
