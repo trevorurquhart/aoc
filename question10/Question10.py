@@ -23,11 +23,7 @@ def solve2(result):
         if posn == 0 and cycle > 0:
             crt += "\n"
 
-        middle_sprite = result[cycle]
-        if middle_sprite + 1 >= posn >= middle_sprite - 1:
-            crt += "# "
-        else:
-            crt += ". "
+        crt += "# " if result[cycle] + 1 >= posn >= result[cycle] - 1 else ". "
 
     print(crt)
 
