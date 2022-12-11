@@ -13,12 +13,7 @@ def register_value_at_start_of_cycle(lines):
 
 
 def solve1(result):
-    signal = 0
-    for i in range(19, len(result), 40):
-        to_add = (i + 1) * result[i]
-        signal += to_add
-
-    print(signal)
+    print(sum([(i + 1) * result[i] for i in range(19, len(result), 40)]))
 
 
 def solve2(result):
