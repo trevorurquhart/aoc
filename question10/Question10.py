@@ -23,7 +23,7 @@ def solve2(result):
         if posn == 0 and cycle > 0:
             crt += "\n"
 
-        crt += "# " if result[cycle] + 1 >= posn >= result[cycle] - 1 else ". "
+        crt += "# " if result[cycle] - 1 <= posn <= result[cycle] + 1 else ". "
 
     print(crt)
 
