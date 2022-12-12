@@ -1,12 +1,3 @@
-class Node:
-
-    def __init__(self, x, y, value):
-        self.x = x
-        self.y = y
-        self.neighbours = []
-        self.previous_visited = []
-
-
 def find_nodes(n, idx, data, x):
     nodes = []
     n_value = node_value(n)
