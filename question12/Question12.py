@@ -23,7 +23,6 @@ def node_value(c):
 
 
 def parse_graph(data, xlen):
-    # graph = [[1 if c == 'S' else 26 if c == 'E' else ord(c) - 96 for c in list(line)] for line in data.split("\n")]
     nodes = []
     for idx, n in enumerate(data):
         nodes.append(find_nodes(n, idx, data, xlen))
