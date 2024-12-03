@@ -22,4 +22,5 @@ def solve_two(lines):
 
 with open('input.txt') as f:
     lines = [l.strip() for l in f.readlines()]
+    solve_one(lines)
     solve_two(lines)
