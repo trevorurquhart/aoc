@@ -1,5 +1,6 @@
 import re
 
+
 def solve_two(input):
     delimited = 'do()' + input.replace('\n', '') + 'don\'t()'
     split = re.findall('do\(\).*?don\'t\(\)', delimited)
