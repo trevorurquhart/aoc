@@ -13,5 +13,6 @@ def solve_one(input):
 
 
 with open('input.txt') as f:
-    print(solve_one(f.read()))
-    print(solve_two(f.read()))
+    file = f.read()
+    print(solve_one(file))
+    print(solve_two(file))
