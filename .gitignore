@@ -1,2 +1,6 @@
 .idea
 aoc_env/
+/lib64/
+/pyvenv.cfg
+/lib/
+/bin/

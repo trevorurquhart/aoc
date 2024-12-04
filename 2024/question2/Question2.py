@@ -1,8 +1,6 @@
 def is_safe(values):
     diffs = [values[x + 1] - values[x] for x in range(len(values) - 1)]
-    ok_diffs = [x for x in diffs
-                 if (all(n > 0 for n in diffs) or all(n < 0 for n in diffs)) and
-                     (1 <= abs(x) <= 3)]
+    ok_diffs = [x for x in diffs if (all(1 <= abs(x) <= 3 for x in diffs) or all(-1 >= abs(x) >= -3 for x in diffs))]
     return len(diffs) == len(ok_diffs)
 
 
