@@ -1,27 +1,28 @@
 import sys
 import time
 
-def walk(steps, grid, y, x, dir, obstacle=(-1, -1)):
 
-    step = (y, x, dir)
+def walk(grid, y, x, dir, obstacle=(-1, -1)):
 
-    if step in steps:
-        return steps, True
-
-    steps.add(step)
+    steps = set()
+    curr_y = y
+    curr_x = x
 
     while True:
-        ny, nx = next_move(dir, y, x)
+        ny, nx = next_move(dir, curr_y, curr_x)
+
         if not(in_grid(grid, ny, nx)):
             return steps, False
 
         if not(is_blocked(grid, ny, nx, obstacle)):
-            break
+            step = (ny, nx, dir)
+            if step in steps:
+                return steps, True
+            steps.add(step)
+            curr_y, curr_x = ny, nx
 
         if is_blocked(grid, ny, nx, obstacle):
             dir = rotate_right(dir)
-
-    return walk(steps, grid, ny, nx, dir, obstacle)
 
 
 def rotate_right(dir):
@@ -57,7 +58,7 @@ def in_grid(grid, y, x):
 
 
 def solve_one(grid, y, x):
-    steps, loop = walk(set(), grid, y, x, "^")
+    steps, loop = walk(grid, y, x, "^")
     path = set([(x, y) for x, y, d in steps])
     print(len(path))
     return path
@@ -66,14 +67,13 @@ def solve_one(grid, y, x):
 def solve_two(grid, y, x, to_block):
     obs = []
     for obstacle in to_block:
-        steps, loop = walk(set(), grid, y, x, "^", obstacle)
+        steps, loop = walk(grid, y, x, "^", obstacle)
         if loop:
             obs.append(obstacle)
     print(len(obs))
 
 
 with open('input.txt') as f:
-    sys.setrecursionlimit(10000)
     entries = [l.strip() for l in f.readlines()]
     y, x = [(idx, line.find("^")) for idx, line in enumerate(entries) if '^' in line][0]
     grid = [list(l) for l in entries]
