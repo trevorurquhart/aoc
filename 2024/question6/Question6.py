@@ -1,5 +1,5 @@
 import sys
-
+import time
 
 def walk(steps, grid, y, x, dir, obstacle=(-1, -1)):
 
@@ -58,17 +58,17 @@ def in_grid(grid, y, x):
 
 def solve_one(grid, y, x):
     steps, loop = walk(set(), grid, y, x, "^")
-    print(len(set([(x, y) for x, y, d in steps])))
+    path = set([(x, y) for x, y, d in steps])
+    print(len(path))
+    return path
 
 
-def solve_two(grid, y, x):
+def solve_two(grid, y, x, to_block):
     obs = []
-    for oy in range(len(grid)):
-        for ox in range(len(grid[0])):
-            obstacle = (oy, ox)
-            steps, loop = walk(set(), grid, y, x, "^", obstacle)
-            if loop:
-                obs.append(obstacle)
+    for obstacle in to_block:
+        steps, loop = walk(set(), grid, y, x, "^", obstacle)
+        if loop:
+            obs.append(obstacle)
     print(len(obs))
 
 
@@ -77,5 +77,8 @@ with open('input.txt') as f:
     entries = [l.strip() for l in f.readlines()]
     y, x = [(idx, line.find("^")) for idx, line in enumerate(entries) if '^' in line][0]
     grid = [list(l) for l in entries]
-    solve_one(entries, y, x)
-    solve_two(entries, y, x)
+    path = solve_one(entries, y, x)
+    start = time.time()
+    solve_two(entries, y, x, path)
+    end = time.time()
+    print(f'Took: {end - start}s')
