@@ -14,15 +14,15 @@ def walk(grid, y, x, dir, obstacle=(-1, -1)):
         if not(in_grid(grid, ny, nx)):
             return steps, False
 
+        if is_blocked(grid, ny, nx, obstacle):
+            dir = rotate_right(dir)
+
         if not(is_blocked(grid, ny, nx, obstacle)):
             step = (ny, nx, dir)
             if step in steps:
                 return steps, True
             steps.add(step)
             curr_y, curr_x = ny, nx
-
-        if is_blocked(grid, ny, nx, obstacle):
-            dir = rotate_right(dir)
 
 
 def rotate_right(dir):
@@ -59,9 +59,9 @@ def in_grid(grid, y, x):
 
 def solve_one(grid, y, x):
     steps, loop = walk(grid, y, x, "^")
-    path = set([(x, y) for x, y, d in steps])
-    print(len(path))
-    return path
+    unique = set([(x, y) for x, y, d in steps])
+    print(len(unique))
+    return unique
 
 
 def solve_two(grid, y, x, to_block):
