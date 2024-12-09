@@ -49,11 +49,11 @@ def solve_two(lines):
     print(ans)
 
 
-
 def get_combos(o, n):
     if (o, n) not in combos.keys():
         combos[(o, n)] = list(itertools.product(range(o), repeat = n))
     return combos[(o, n)]
+
 
 with open('input.txt') as f:
     lines = f.readlines()

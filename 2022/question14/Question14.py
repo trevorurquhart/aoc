@@ -11,9 +11,9 @@ def mark(grid, x1, x2, y1, is_x):
     x_off = 0 if x1 == x2 else x2 - x1 + x_step
     for x in range(x1, x1 + x_off, x_step):
         if is_x:
-            grid.add((x, y1))
+            grid.add((x, y1),,
         else:
-            grid.add((y1, x))
+            grid.add((y1, x),,
 
 
 def drop(current_posn, grid, sand_posns, max_depth, stop_before_max):
