@@ -10,7 +10,7 @@ def next_0(grid, start):
             y = y + 1
 
         if y >= len(grid):
-            return -1, -1
+            return None
 
         if grid[y][x] == 0:
             return y, x
@@ -27,8 +27,8 @@ def neighbours(grid, y, x):
     return n
 
 
-def count_trail_heads(grid, i):
-    to_visit = [i]
+def count_trail_heads(grid, from0):
+    to_visit = [from0]
     cnt = 0
     nines = set()
     while len(to_visit) > 0:
@@ -36,7 +36,8 @@ def count_trail_heads(grid, i):
         if grid[y][x] == 9:
             nines.add((y, x))
             cnt = cnt + 1
-        to_visit.extend(neighbours(grid, y, x))
+        else:
+            to_visit.extend(neighbours(grid, y, x))
 
     return cnt, len(nines)
 
@@ -47,7 +48,7 @@ def solve(grid):
     two_cnt = 0
     while True:
         next0 = next_0(grid, next0)
-        if next0[0] == -1:
+        if next0 is None:
             break
         n, u = count_trail_heads(grid, next0)
         one_cnt = one_cnt + u
