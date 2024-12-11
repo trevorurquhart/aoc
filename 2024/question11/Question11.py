@@ -1,16 +1,10 @@
 import math
 import functools
 
-divisors = {}
 
-
-def get_divisor(digits, divisors):
-    if digits in divisors:
-        return divisors[digits]
-
-    divisor = int(math.pow(10, digits // 2))
-    divisors[digits] = divisor
-    return divisor
+@functools.cache
+def get_divisor(digits):
+    return int(math.pow(10, digits // 2))
 
 
 def solve_one(line, blinks):
@@ -18,6 +12,7 @@ def solve_one(line, blinks):
     for c in line:
         cnt = cnt + blink_n(c, blinks)
     return cnt
+
 
 @functools.cache
 def blink_n(c, n):
@@ -28,6 +23,7 @@ def blink_n(c, n):
 
     return sum([blink_n(x, n - 1) for x in result])
 
+
 @functools.cache
 def blink(c):
     if c == 0:
@@ -35,7 +31,7 @@ def blink(c):
 
     digits = int(math.log10(c))+1
     if digits % 2 == 0:
-        divisor = get_divisor(digits, divisors)
+        divisor = get_divisor(digits)
         n1 = c // divisor
         n2 = c % divisor
         return [n1, n2]
