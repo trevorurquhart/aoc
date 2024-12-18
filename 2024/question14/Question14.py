@@ -62,7 +62,6 @@ def solve_one(lines, moves, maxx, maxy):
 
     qcnt = [0, 0, 0, 0]
     for robot in robots:
-        print(f'x: {robot.x}, y: {robot.y}, vx: {robot.vx}, vy: {robot.vy}')
         q = robot.quadrant(maxx // 2, maxy // 2)
         if q is not None:
             qcnt[q] = qcnt[q] + 1
@@ -75,8 +74,6 @@ def solve_one(lines, moves, maxx, maxy):
 
 def solve_two(lines, maxx, maxy):
     robots = parse(lines, maxx, maxy)
-
-    candidate_pos = (maxx //2, 0)
 
     moves = 0
     while True:
