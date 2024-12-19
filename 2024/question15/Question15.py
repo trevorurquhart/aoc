@@ -1,5 +1,5 @@
 deltas = {'>': (0, 1), '<': (0, -1), '^': (-1, 0), 'v': (1, 0)}
-
+box_edges = ['[', ']']
 
 def move(robot, grid, m):
     dy, dx = deltas[m]
@@ -22,13 +22,30 @@ def move(robot, grid, m):
     execute_move(dx, dy, grid, to_move)
     return robot[0] + dy, robot[1] + dx
 
-def move2(robot, grid, m):
 
+def find_neighbours(grid, n, dy, visited):
+    neighbours = []
+    y, x = n
+    ny = y + dy
+    xy_value = grid[y][x]
+    dx = -1 if xy_value == ']' else 1
+    if (y, x + dx) not in visited:
+        neighbours.append((y, x + dx))
+
+    if (ny, x) not in visited:
+        neighbours.append((ny, x))
+
+    return neighbours
+
+# def value_in_grid(grid)
+
+
+def move2(robot, grid, dir):
     to_move = [robot]
     y, x = robot
-    if m == '<' or m == '>':
+    if dir == '<' or dir == '>':
         dy = 0
-        dx = -1 if m == '<' else 1
+        dx = -1 if dir == '<' else 1
         while True:
             cx = x + dx
             next = grid[y][cx]
@@ -36,7 +53,7 @@ def move2(robot, grid, m):
             if next == '#':
                 return robot
 
-            if next in ['[', ']']:
+            if next in box_edges:
                 to_move.append((y, cx))
 
             if next == '.':
@@ -44,31 +61,36 @@ def move2(robot, grid, m):
 
             x = cx
 
-    if m == '^' or m == 'v':
+    if dir == '^' or dir == 'v':
         dx = 0
-        dy = -1 if m == '^' else 1
-        cy = y + dx
-        next = grid[x][cy]
+        dy = -1 if dir == '^' else 1
+        cy = y + dy
+        next = grid[cy][x]
 
-        if next in ['[', ']']:
-            visited = set()
-            to_visit = [next]
-            while len(next) > 0:
-                n = to_visit.pop()
-                nbs = find_neighbours(grid, n)
+        if next == "#":
+            return robot
+
+        if next in box_edges:
+            to_visit = [(cy, x)]
+            while len(to_visit) > 0:
+                pos = to_visit.pop(0)
+                to_move.append(pos)
+                nbs = find_neighbours(grid, pos, dy, to_move)
                 for n in nbs:
-                    # if here
+                    ny, nx = n
+                    n_value = grid[ny][nx]
+                    if n_value == '.':
+                        continue
 
-                    if n not in visited:
+                    if n_value == "#":
+                        return robot
+
+                    if n_value in ['[', ']'] and n not in to_move and n not in to_visit:
                         to_visit.append(n)
-
-
-
-
-        y, x = cy, cx
 
     execute_move(dx, dy, grid, to_move)
     return robot[0] + dy, robot[1] + dx
+
 
 def execute_move(dx, dy, grid, to_move):
     for n in reversed(to_move):
@@ -91,11 +113,28 @@ def parse_grid_one(lines):
         grid.append(list(line))
     return grid, robot
 
-# def push_box(grid):
+
+def calculate_gps(grid):
+    ans = 0
+    # 0 - 9 len 10
+    ly = len(grid)
+    hy = ly // 2
+    lx = len(grid[0])
+    hx = lx // 2
+    for y in range(ly):
+        for x in range(lx):
+            if grid[y][x] == '[':
+                ans += 100 * y + x
+    return ans
+
+
 def move_through_grid_two(robot, grid, moves):
     r = robot
     for m in moves:
         r = move2(r, grid, m)
+    ans = calculate_gps(grid)
+    print(ans)
+
 
 def parse_grid_two(lines):
     grid = []
@@ -135,8 +174,9 @@ def solve_two(lines, moves):
     move_through_grid_two(robot, grid, moves)
     print_grid(grid)
 
-with open("test_data2a.txt") as g, open("test_data2b.txt") as m:
+
+with open("inputa.txt") as g, open("inputb.txt") as m:
     glines = [l.strip() for l in g.readlines()]
     moves = list(m.read().replace('\n', ''))
     # solve_one(glines, moves)
-    solve_two(glines, m.read())
+    solve_two(glines, moves)
