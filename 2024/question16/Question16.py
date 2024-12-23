@@ -27,7 +27,7 @@ def solve(grid, S, E):
     sy, sx = S
     to_visit = [(sy, sx, 'E', 0, [sy, sx])]
     while len(to_visit) > 0:
-        visiting = to_visit.pop()
+        visiting = to_visit.pop(0)
         vy, vx, vdir, vcost, vpath = visiting
         if best_cost < vcost:
             continue
@@ -39,6 +39,7 @@ def solve(grid, S, E):
 
             if vcost == best_cost:
                 paths += vpath
+                continue
 
         nbs = find_neighbours(grid, visiting)
         for n in nbs:
