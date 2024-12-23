@@ -13,10 +13,9 @@ def find_neighbours(grid, point):
     y, x, d, c, path = point
     for dir in [(d, 1), (rotate_left[d], 1001), (rotate_right[d], 1001)]:
         dy, dx = deltas[dir[0]]
-        ny = y + dy
-        nx = x + dx
-        if v(grid, (ny, nx)) in ['.', 'E']:
-            n.append((ny, nx, dir[0], dir[1], path + [(ny, nx)]))
+        p = (y + dy, x + dx)
+        if v(grid, p) in ['.', 'E']:
+            n.append((p[0], p[1], dir[0], dir[1], path + [p]))
     return n
 
 
