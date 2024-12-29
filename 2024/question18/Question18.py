@@ -66,9 +66,6 @@ def solve_two():
             return b
 
 
-
-
-
 with open("input.txt") as f:
     bytes = [(int(x), int(y)) for x, y in [l.strip().split(',') for l in f.readlines()]]
     grid = [['.' for x in range(0, 71)] for y in range(0, 71)]
